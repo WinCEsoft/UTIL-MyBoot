@@ -1,0 +1,8 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\MyBoot.Form1.resources
+obj\Debug\MyBoot.Properties.Resources.resources
+obj\Debug\MyBoot.csproj.GenerateResource.Cache
+bin\Debug\MyBoot.exe
+bin\Debug\MyBoot.pdb
+obj\Debug\MyBoot.exe
+obj\Debug\MyBoot.pdb
