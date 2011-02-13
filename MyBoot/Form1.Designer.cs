@@ -38,6 +38,8 @@ namespace MyBoot
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.labelStarting = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer();
             this.SuspendLayout();
             // 
             // button1
@@ -103,12 +105,26 @@ namespace MyBoot
             this.button5.Text = "Unused";
             this.button5.Visible = false;
             // 
+            // labelStarting
+            // 
+            this.labelStarting.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
+            this.labelStarting.Location = new System.Drawing.Point(18, 42);
+            this.labelStarting.Name = "labelStarting";
+            this.labelStarting.Size = new System.Drawing.Size(69, 15);
+            this.labelStarting.Text = "label1";
+            this.labelStarting.Visible = false;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(230, 217);
+            this.Controls.Add(this.labelStarting);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -131,6 +147,8 @@ namespace MyBoot
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label labelStarting;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

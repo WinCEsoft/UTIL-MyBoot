@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WPK")]
 [assembly: AssemblyProduct("MyBoot")]
-[assembly: AssemblyCopyright("Copyright © Werner Keilholz 2009")]
+[assembly: AssemblyCopyright("Copyright © Werner Keilholz 2009-2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.2.0.0")]
 

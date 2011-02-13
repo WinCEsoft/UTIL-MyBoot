@@ -17,9 +17,28 @@ namespace MyBoot
             public String Name;
             public String ExePath;
             public int Number;
+
+            public void Start()
+            {
+                string MyBootExePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase.ToString());
+                string AppExePath;
+                if ((ExePath[0].CompareTo('.') == 0) && (ExePath[1].CompareTo('\\') == 0))
+                {
+                    // path relative to MyBoot exe
+                    AppExePath = MyBootExePath + ExePath.Substring(1);
+                }
+                else
+                {
+                    AppExePath = ExePath;
+                }
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = AppExePath;
+                process.Start();
+            }
         }
 
         private List<Application> ApplicationList = new List<Application>();
+        private int AutoStart = -1;
 
         private List<Button> ButtonList = new List<Button>();
 
@@ -56,21 +75,13 @@ namespace MyBoot
                         {
                             Button theButton = (Button) sender;
                             int AppNumber = System.Convert.ToInt16(theButton.Name.Substring(6));
-                            string ExePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase.ToString());
-                            Application aa = ApplicationList[AppNumber - 1];
-                            if ((aa.ExePath[0].CompareTo('.') == 0) && (aa.ExePath[1].CompareTo('\\')==0))
-                            {
-                                // path relative to exe
-                                ExePath = ExePath + aa.ExePath.Substring(1);
-                            }
-                            else
-                            {
-                                // absolute path
-                                ExePath = aa.ExePath;
-                            }
-                            System.Diagnostics.Process process = new System.Diagnostics.Process();
-                            process.StartInfo.FileName = ExePath;
-                            process.Start();
+                            Application theApplication = ApplicationList[AppNumber - 1];
+
+                            theApplication.Start();
+
+                            AutoStart = -1; // cancel auto start, if any
+                            timer1.Enabled = false;
+                            labelStarting.Text = "";
                         }
                     );
 
@@ -94,6 +105,7 @@ namespace MyBoot
                     String line="";
                     String right;
                     String ButtonName;
+                    String autostartCmd="";
 
                     while (line != null)
                     {
@@ -109,6 +121,20 @@ namespace MyBoot
                         app.Name = right.Split(';')[1].Trim();
 
                         ApplicationList.Add(app);
+
+                        if (right.Split(';').Length > 2)
+                        {
+                            autostartCmd = right.Split(';')[2].Trim();
+                            
+
+                            if (autostartCmd.Substring(0, 9) == "autostart")
+                                if (autostartCmd.Split(' ').Length >= 2)
+                                {
+                                    AutoStart = System.Convert.ToInt16(autostartCmd.Split(' ')[1]);
+                                    timer1.Interval = 1000;
+                                    timer1.Enabled = true;
+                                }
+                        }
                     }
 
                     return true;
@@ -154,6 +180,23 @@ namespace MyBoot
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             process.StartInfo.FileName = AppPath;
             process.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            labelStarting.Text = "Starts in " + AutoStart.ToString() + " s";
+            labelStarting.Visible = true;
+            AutoStart--;
+
+            if (AutoStart <= 0) 
+            {
+                Application theApplication = ApplicationList[0];
+                theApplication.Start();
+
+                timer1.Enabled = false;
+
+                labelStarting.Visible = false;
+            }
         }       
     }
 }
